@@ -32,7 +32,7 @@ set( CMAKE_DISABLE_IN_SOURCE_BUILD ON )
 
 set( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
 
-option( WITH_APPS "Build applications" ON )
+option( WITH_APPS "Build applications" OFF )
 
 # OpenSSL version detection imported from FindOpenSSL.cmake
 
@@ -102,15 +102,8 @@ set( LIB_SOVERSION ${VERSION_MAJOR}.${VERSION_MINOR} )
 add_definitions( -DOPENSSL_NO_ASM )
 add_definitions( -DOPENSSL_NO_STATIC_ENGINE )
 
-if( MSVC )
-  include( MSVCRuntime )
-  configure_msvc_runtime()
-  set( OPENSSLDIR "C:/ssl" )
-  set( ENGINESDIR "C:/engines-1.1" )
-else()
-  set( OPENSSLDIR "${CMAKE_INSTALL_PREFIX}/ssl" )
-  set( ENGINESDIR "${CMAKE_INSTALL_PREFIX}/engines-1.1" )
-endif()
+set( OPENSSLDIR "${CMAKE_CURRENT_BINARY_DIR}/ssl" )
+set( ENGINESDIR "${CMAKE_CURRENT_BINARY_DIR}/engines-1.1" )
 add_definitions( "-DOPENSSLDIR=\"${OPENSSLDIR}\"" )
 add_definitions( "-DENGINESDIR=\"${ENGINESDIR}\"" )
 
